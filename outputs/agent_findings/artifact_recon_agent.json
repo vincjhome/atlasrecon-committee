@@ -1,0 +1,86 @@
+[
+  {
+    "agent_name": "artifact_recon_agent",
+    "atlas_tactic": "Reconnaissance",
+    "atlas_technique_id": "AML.T0002",
+    "atlas_technique_name": "Acquire Public AI Artifacts",
+    "finding_title": "Public model weight artifacts exposed",
+    "severity": "medium",
+    "confidence": "high",
+    "summary": "The repository listing shows downloadable model weight files (safetensors/pytorch model artifacts) available directly from the Hugging Face repository.",
+    "evidence": [
+      "quot;task\":\"conversational\",\"adapterWeightsPath\":\"model.safetensors\",\"isCheapestPricingOutput\":false,\"isFastestThroughput\":false,\"isModelAuthor\":false}],\"showHu...",
+      "ask\":\"conversational\",\"adapterWeightsPath\":\"model.safetensors\",\"isCheapestPricingOutput\":false,\"isFastestThroughput\":false,\"isModelAuthor\":false}],\"showHuggingC...",
+      "quot;task\":\"conversational\",\"adapterWeightsPath\":\"model.safetensors\",\"isCheapestPricingOutput\":false,\"isFastestThroughput\":false,\"isModelAuthor\":false}],\"showHu..."
+    ],
+    "source_files": [
+      "discussions_page.html",
+      "files_page.html",
+      "model_page.html"
+    ],
+    "adversary_value": "Lets an adversary acquire the actual trained weights for offline use, enabling local replication, fine-tuning, extraction attacks, or repackaging without needing further access to the original host.",
+    "defensive_recommendation": "Expected for an open-weight release; for restricted models, gate weight downloads behind authentication/licensing acceptance."
+  },
+  {
+    "agent_name": "artifact_recon_agent",
+    "atlas_tactic": "Reconnaissance",
+    "atlas_technique_id": "AML.T0002",
+    "atlas_technique_name": "Acquire Public AI Artifacts",
+    "finding_title": "Tokenizer and generation configuration files exposed",
+    "severity": "low",
+    "confidence": "high",
+    "summary": "The repository exposes tokenizer and generation configuration files (tokenizer.json, tokenizer_config.json, generation_config.json, config.json, vocab/merges files) needed to run the model exactly as intended.",
+    "evidence": [
+      "o tokenizer.json 7.03 MB Upload folder using huggingface_hub almost 2 years ago tokenizer_config.json 7.31 kB Upload ./tokenizer_config.json with huggingface_hu...",
+      "l.safetensors 988 MB xet Upload folder using huggingface_hub almost 2 years ago tokenizer.json 7.03 MB Upload folder using huggingface_hub almost 2 years ago to...",
+      "go config.json 659 Bytes Upload folder using huggingface_hub almost 2 years ago generation_config.json 242 Bytes Upload folder using huggingface_hub almost 2 ye..."
+    ],
+    "source_files": [
+      "files_page.html"
+    ],
+    "adversary_value": "These configs are required to faithfully reproduce inference behavior (tokenization, generation defaults, model hyperparameters), removing the guesswork an adversary would otherwise need for offline analysis or replication.",
+    "defensive_recommendation": "Standard for open-source releases; no action needed unless these configs encode internal/non-public deployment defaults."
+  },
+  {
+    "agent_name": "artifact_recon_agent",
+    "atlas_tactic": "Reconnaissance",
+    "atlas_technique_id": "AML.T0002",
+    "atlas_technique_name": "Acquire Public AI Artifacts",
+    "finding_title": "Repository metadata and model card files exposed",
+    "severity": "low",
+    "confidence": "medium",
+    "summary": "The repository listing exposes metadata files (README.md, .gitattributes, LICENSE) describing the repository's contents and terms.",
+    "evidence": [
+      "most 2 years ago LICENSE 11.3 kB update README & LICENSE almost 2 years ago README.md 4.92 kB Update metadata: Add library_name to Transformers (#2) over 1 year...",
+      "tion\":9,\"isReleased\":true,\"accuratePricing\":true}]}}\"> .gitattributes 1.52 kB initial commit almost 2 years ago LICENSE 11.3 kB update README & LICENSE almost 2...",
+      "Qwen/Qwen2.5-0.5B\",\"base_model:finetune:Qwen/Qwen2.5-0.5B\",\"license:apache-2.0\",\"text-generation-inference\",\"endpoints_compatible\",\"deploy:azure\",\"region:us\"],\"..."
+    ],
+    "source_files": [
+      "discussions_page.html",
+      "files_page.html",
+      "model_page.html"
+    ],
+    "adversary_value": "Repository metadata helps an adversary understand how the artifact is packaged, versioned, and licensed, informing redistribution or reuse planning.",
+    "defensive_recommendation": "Standard for open-source repositories; no action needed."
+  },
+  {
+    "agent_name": "artifact_recon_agent",
+    "atlas_tactic": "Reconnaissance",
+    "atlas_technique_id": "AML.T0002",
+    "atlas_technique_name": "Acquire Public AI Artifacts",
+    "finding_title": "Artifact structure reveals model packaging and deployment format",
+    "severity": "low",
+    "confidence": "medium",
+    "summary": "File sizes, commit/upload history, and contributor counts visible in the repository listing reveal how the model artifacts are packaged and maintained over time.",
+    "evidence": [
+      "r: docker model run hf.co/Qwen/Qwen2.5-0.5B-Instruct main Qwen2.5-0.5B-Instruct 1,000 MB \u2318 K \u2318 K 5 contributors History: 10 commits #2</a>)\"},\"repo\":{",
+      "Instruct main Qwen2.5-0.5B-Instruct 1,000 MB \u2318 K \u2318 K 5 contributors History: 10 commits #2</a>)\"},\"repo\":{\"name\":\"Qwen/Qwen2.5-0.5B-Instruct\",\"type\":\"mode",
+      "hf.co/Qwen/Qwen2.5-0.5B-Instruct main Qwen2.5-0.5B-Instruct 1,000 MB \u2318 K \u2318 K 5 contributors History: 10 commits #2</a>)\"},\"repo\":{\"name\":\"Qwen/Qwen2.5-0.5B-Inst..."
+    ],
+    "source_files": [
+      "files_page.html"
+    ],
+    "adversary_value": "File size and revision history help an adversary estimate storage/bandwidth requirements for acquiring artifacts and identify whether newer or older revisions might expose additional or different files.",
+    "defensive_recommendation": "Standard for open-source repositories; no action needed."
+  }
+]

@@ -1,0 +1,87 @@
+[
+  {
+    "agent_name": "model_card_recon_agent",
+    "atlas_tactic": "Reconnaissance",
+    "atlas_technique_id": "AML.T0003",
+    "atlas_technique_name": "Search Victim-Owned Websites",
+    "finding_title": "Public model identity and instruction-tuned purpose exposed",
+    "severity": "low",
+    "confidence": "high",
+    "summary": "The model card publicly identifies the model family/name and states that it is an instruction-tuned language model, confirming both its identity and intended behavior.",
+    "evidence": [
+      "Qwen/Qwen2.5-0.5B-Instruct \u00b7 Discussions Hugging Face Models Datasets Spaces Buckets new Docs Enterprise P",
+      "e language models. For Qwen2.5, we release a number of base language models and instruction-tuned language models ranging from 0.5 to 72 billion parameters. Qwe...",
+      "atest series of Qwen large language models. For Qwen2.5, we release a number of base language models and instruction-tuned language models ranging from 0.5 to 7..."
+    ],
+    "source_files": [
+      "discussions_page.html",
+      "files_page.html",
+      "model_page.html"
+    ],
+    "adversary_value": "Confirms the exact model identity and behavior class an adversary is targeting, letting them reuse known prompting/jailbreak techniques documented for this model family.",
+    "defensive_recommendation": "No change needed for a public model card; if this were a private/internal deployment, avoid publishing identity and tuning details on public pages."
+  },
+  {
+    "agent_name": "model_card_recon_agent",
+    "atlas_tactic": "Reconnaissance",
+    "atlas_technique_id": "AML.T0003",
+    "atlas_technique_name": "Search Victim-Owned Websites",
+    "finding_title": "Architecture and capability details exposed in model card",
+    "severity": "medium",
+    "confidence": "high",
+    "summary": "The model card discloses architecture details (layer/attention head counts, context length) that describe the model's internal design and operating limits.",
+    "evidence": [
+      "s: Type: Causal Language Models Training Stage: Pretraining & Post-training Architecture: transformers with RoPE, SwiGLU, RMSNorm, Attention QKV bias and tied w...",
+      "instruction-tuned 0.5B Qwen2.5 model , which has the following features: Type: Causal Language Models Training Stage: Pretraining & Post-training Architecture:...",
+      "36B Number of Layers: 24 Number of Attention Heads (GQA): 14 for Q and 2 for KV Context Length: Full 32,768 tokens and generation 8192 tokens For more details,..."
+    ],
+    "source_files": [
+      "model_page.html"
+    ],
+    "adversary_value": "Architecture and context-length details help an adversary craft inputs tuned to the model's exact capacity (e.g. context-window stuffing) and estimate compute requirements for replication or fine-tuning.",
+    "defensive_recommendation": "Architecture disclosure is expected for open releases; for sensitive deployments, avoid publishing exact context-length and attention configuration values."
+  },
+  {
+    "agent_name": "model_card_recon_agent",
+    "atlas_tactic": "Reconnaissance",
+    "atlas_technique_id": "AML.T0003",
+    "atlas_technique_name": "Search Victim-Owned Websites",
+    "finding_title": "Usage instructions and sample inference patterns exposed",
+    "severity": "low",
+    "confidence": "high",
+    "summary": "The model card includes copy-paste sample code for loading and running the model (transformers API usage, chat templates, install commands).",
+    "evidence": [
+      "wen2.5-0.5B-Instruct with Transformers: # Use a pipeline as a high-level helper from transformers import pipeline pipe = pipeline(\"text-generation\", model=\"Qwen...",
+      "the tokenizer and model and how to generate contents. from transformers import AutoModelForCausalLM, AutoTokenizer model_name = \"Qwen/Qwen2.5-0.5B-Instruct\" mod...",
+      "messages = [ {\"role\": \"user\", \"content\": \"Who are you?\"}, ] inputs = tokenizer.apply_chat_template( messages, add_generation_prompt=True, tokenize=True, return_..."
+    ],
+    "source_files": [
+      "discussions_page.html",
+      "files_page.html",
+      "model_page.html"
+    ],
+    "adversary_value": "Working sample code lowers the effort required for an adversary to load and run the exact model locally, accelerating offline probing, fine-tuning, or extraction attempts.",
+    "defensive_recommendation": "Standard for open-source model cards; no action needed beyond ensuring no internal/private endpoints are included in sample usage code."
+  },
+  {
+    "agent_name": "model_card_recon_agent",
+    "atlas_tactic": "Reconnaissance",
+    "atlas_technique_id": "AML.T0003",
+    "atlas_technique_name": "Search Victim-Owned Websites",
+    "finding_title": "License/release information exposed",
+    "severity": "low",
+    "confidence": "medium",
+    "summary": "The model card/metadata states the license terms under which the model is released.",
+    "evidence": [
+      "Qwen/Qwen2.5-0.5B\",\"base_model:finetune:Qwen/Qwen2.5-0.5B\",\"license:apache-2.0\",\"text-generation-inference\",\"endpoints_compatible\",&q",
+      "n2.5-0.5B\",\"base_model:finetune:Qwen/Qwen2.5-0.5B\",\"license:apache-2.0\",\"text-generation-inference\",\"endpoints_compatible\",&q"
+    ],
+    "source_files": [
+      "discussions_page.html",
+      "files_page.html",
+      "model_page.html"
+    ],
+    "adversary_value": "Confirms the legal terms under which the model and its weights can be reused, redistributed, or fine-tuned, informing how an adversary could repackage the artifact without further permission.",
+    "defensive_recommendation": "No action needed; license disclosure is expected and required for open-source releases."
+  }
+]

@@ -1,0 +1,4 @@
+# AtlasRecon Committee runs on the Python standard library.
+# beautifulsoup4 is optional: the HTML loader uses it when available and
+# falls back to a regex-based extractor otherwise.
+beautifulsoup4>=4.12.0

@@ -1,0 +1,42 @@
+# AI tool / editor metadata
+.claude/
+.cursor/
+.windsurf/
+.aider*
+.continue/
+.roo/
+.mcp.json
+mcp*.json
+.vscode/
+.idea/
+
+# Python cache
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.cache/
+
+# Environment / secrets
+.env
+.venv/
+venv/
+
+# macOS
+.DS_Store
+
+# Build / submission artifacts
+submission/
+grading/
+assignment/
+*.zip
+
+# Large raw offline Hugging Face HTML captures
+# Used locally for analysis, but not pushed to keep the public repo lean.
+target_html/model_page.html
+target_html/files_page.html
+target_html/discussions_page.html
+
+# Temporary folders
+tmp/
+temp/

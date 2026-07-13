@@ -1,0 +1,85 @@
+[
+  {
+    "agent_name": "technical_exposure_agent",
+    "atlas_tactic": "Reconnaissance",
+    "atlas_technique_id": "AML.T0000",
+    "atlas_technique_name": "Search Open Technical Databases",
+    "finding_title": "Architecture and model capacity details exposed",
+    "severity": "medium",
+    "confidence": "high",
+    "summary": "The page publicly documents the model's architecture and capacity (parameter count, layer count, attention head configuration, training stage).",
+    "evidence": [
+      "formers with RoPE, SwiGLU, RMSNorm, Attention QKV bias and tied word embeddings Number of Parameters: 0.49B Number of Paramaters (Non-Embedding): 0.36B Number o...",
+      "eddings Number of Parameters: 0.49B Number of Paramaters (Non-Embedding): 0.36B Number of Layers: 24 Number of Attention Heads (GQA): 14 for Q and 2 for KV Cont...",
+      "ameters: 0.49B Number of Paramaters (Non-Embedding): 0.36B Number of Layers: 24 Number of Attention Heads (GQA): 14 for Q and 2 for KV Context Length: Full 32,7..."
+    ],
+    "source_files": [
+      "model_page.html"
+    ],
+    "adversary_value": "Precise architecture and parameter details let an adversary profile the model's capabilities and limitations, plan compute requirements for replication, and select attack techniques known to be effective against similarly sized/structured models.",
+    "defensive_recommendation": "Expected for an open model card; for non-public deployments, avoid disclosing exact architecture/parameter specifics."
+  },
+  {
+    "agent_name": "technical_exposure_agent",
+    "atlas_tactic": "Reconnaissance",
+    "atlas_technique_id": "AML.T0000",
+    "atlas_technique_name": "Search Open Technical Databases",
+    "finding_title": "Long context length and generation capability exposed",
+    "severity": "medium",
+    "confidence": "high",
+    "summary": "The page states the model's context window and generation token limits, revealing how much input/output the model can process.",
+    "evidence": [
+      "36B Number of Layers: 24 Number of Attention Heads (GQA): 14 for Q and 2 for KV Context Length: Full 32,768 tokens and generation 8192 tokens For more details,...",
+      "24 Number of Attention Heads (GQA): 14 for Q and 2 for KV Context Length: Full 32,768 tokens and generation 8192 tokens For more details, please refer to our bl..."
+    ],
+    "source_files": [
+      "model_page.html"
+    ],
+    "adversary_value": "Knowing the exact context window lets an adversary plan prompt-attack or context-stuffing strategies (e.g. injection payload sizing) tuned to the model's exact limits rather than guessing.",
+    "defensive_recommendation": "Expected for an open model card; no action needed unless context limits reveal non-public deployment tuning."
+  },
+  {
+    "agent_name": "technical_exposure_agent",
+    "atlas_tactic": "Reconnaissance",
+    "atlas_technique_id": "AML.T0000",
+    "atlas_technique_name": "Search Open Technical Databases",
+    "finding_title": "Deployment and inference stack details exposed",
+    "severity": "low",
+    "confidence": "high",
+    "summary": "The page documents the supported inference/deployment stack, including compatibility with text-generation-inference, Hugging Face Inference Endpoints, the transformers pipeline API, and Docker-based serving.",
+    "evidence": [
+      "ase_model:finetune:Qwen/Qwen2.5-0.5B\",\"license:apache-2.0\",\"text-generation-inference\",\"endpoints_compatible\",\"deploy:azure\",\"region:us\"],\"tag_objs\":[{\"id&",
+      "uot;,\"license:apache-2.0\",\"text-generation-inference\",\"endpoints_compatible\",\"deploy:azure\",\"region:us\"],\"tag_objs\":[{\"id\":\"text-generation\"",
+      "Use a pipeline as a high-level helper from transformers import pipeline pipe = pipeline(\"text-generation\", model=\"Qwen/Qwen2.5-0.5B-Instruct\") messages = [ {\"ro..."
+    ],
+    "source_files": [
+      "discussions_page.html",
+      "files_page.html",
+      "model_page.html"
+    ],
+    "adversary_value": "Knowing the exact serving stack helps an adversary anticipate how the model is likely deployed in production, narrowing which tooling and known framework-level weaknesses are relevant to target.",
+    "defensive_recommendation": "Standard for open-source model cards; no action needed."
+  },
+  {
+    "agent_name": "technical_exposure_agent",
+    "atlas_tactic": "Reconnaissance",
+    "atlas_technique_id": "AML.T0000",
+    "atlas_technique_name": "Search Open Technical Databases",
+    "finding_title": "Model lineage, task tags, or ecosystem metadata exposed",
+    "severity": "low",
+    "confidence": "medium",
+    "summary": "The page exposes the model's base-model/finetune lineage, task tags (e.g. conversational, text-generation), and references to external technical reports (e.g. arXiv papers, blog posts).",
+    "evidence": [
+      "ot;,\"arxiv:2407.10671\",\"base_model:Qwen/Qwen2.5-0.5B\",\"base_model:finetune:Qwen/Qwen2.5-0.5B\",\"license:apache-2.0\",\"text-generation-inference\",\"endp",
+      "t;,\"conversational\",\"en\",\"arxiv:2407.10671\",\"base_model:Qwen/Qwen2.5-0.5B\",\"base_model:finetune:Qwen/Qwen2.5-0.5B\",\"license:apache-2.0\"",
+      "Modified\":\"2024-09-25T12:32:56.000Z\",\"likes\":535,\"pipeline_tag\":\"text-generation\",\"library_name\":\"transformers\",\"librariesOther\":[],\""
+    ],
+    "source_files": [
+      "discussions_page.html",
+      "files_page.html",
+      "model_page.html"
+    ],
+    "adversary_value": "Lineage and external reference links let an adversary pull in published technical reports for deeper capability/limitation research, and confirm which base model's known weaknesses may carry over to this finetune.",
+    "defensive_recommendation": "Standard for open-source ecosystem metadata; no action needed."
+  }
+]
